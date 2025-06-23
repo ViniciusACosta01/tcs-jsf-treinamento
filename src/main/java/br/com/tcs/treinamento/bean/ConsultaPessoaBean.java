@@ -106,6 +106,7 @@ public class ConsultaPessoaBean implements Serializable {
         pessoa.setEmail(pessoaSelecionada.getEmail());
         pessoa.setData(pessoaSelecionada.getData());
         pessoa.setTipoDocumento(pessoaSelecionada.getTipoDocumento());
+        pessoa.setRendaMensal(pessoaSelecionada.getRendaMensal());
         pessoa.setNumeroCPF(pessoaSelecionada.getNumeroCPF());
         pessoa.setNumeroCNPJ(pessoaSelecionada.getNumeroCNPJ());
         pessoa.setDataManutencao(new Date());
@@ -142,6 +143,9 @@ public class ConsultaPessoaBean implements Serializable {
         }
         if (pessoaSelecionada.getData() == null) {
             erros.add("Data de nascimento não informada.");
+        }
+        if (pessoaSelecionada.getRendaMensal() == null || pessoaSelecionada.getRendaMensal() <= 0) {
+            erros.add("Renda mensal não informada ou inválida.");
         }
         if (pessoaSelecionada.getTipoDocumento() == null || pessoaSelecionada.getTipoDocumento().trim().isEmpty()) {
             erros.add("Tipo de documento não informado.");
