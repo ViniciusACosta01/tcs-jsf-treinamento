@@ -32,8 +32,8 @@
                     <h:outputText id="email" value="#{consultaPessoaBean.pessoaSelecionada.email}" />
 
                     <p:outputLabel for="data" value="Data de Nascimento:" />
-                    <h:outputText id="data">
-                        <f:convertDateTime pattern="dd/MM/yyyy" value="#{consultaPessoaBean.pessoaSelecionada.data}" />
+                    <h:outputText id="data" value="#{consultaPessoaBean.pessoaSelecionada.data}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
                     </h:outputText>
 
                     <p:outputLabel for="tipo" value="Tipo de Documento:" />

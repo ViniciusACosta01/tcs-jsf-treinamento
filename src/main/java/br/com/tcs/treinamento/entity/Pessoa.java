@@ -31,6 +31,9 @@ public class Pessoa implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date data;
 
+    @Temporal(TemporalType.DATE)
+    private Date dataCadastro;
+
     // Indica se o documento é CPF ou CNPJ
     private String tipoDocumento;
 
@@ -159,6 +162,10 @@ public class Pessoa implements Serializable {
     public void setDataManutencao(Date dataManutencao) {
         this.dataManutencao = dataManutencao;
     }
+
+    public Date getDataCadastro() {return dataCadastro;}
+
+    public void setDataCadastro(Date dataCadastro) {this.dataCadastro = dataCadastro;}
 
     public Boolean getAtivo() {
         return ativo;
