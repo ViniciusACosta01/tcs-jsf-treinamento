@@ -43,6 +43,18 @@
                     <p:calendar id="data" value="#{consultaPessoaBean.pessoaSelecionada.data}"
                                 pattern="dd/MM/yyyy" showIcon="true" />
 
+                    <p:outputLabel for="pais" value="País:" styleClass="label" />
+                    <p:selectOneMenu id="pais" value="#{consultaPessoaBean.pessoaSelecionada.pais}" style="width:100%;">
+                        <f:selectItem itemValue="" itemLabel="Selecione" noSelectionOption="true"/>
+                        <f:selectItem itemValue="BR" itemLabel="Brasil" />
+                        <f:selectItem itemValue="CA" itemLabel="Canadá" />
+                        <f:selectItem itemValue="CL" itemLabel="Chile" />
+                        <f:selectItem itemValue="EQ" itemLabel="Equador" />
+                        <f:selectItem itemValue="US" itemLabel="Estados Unidos" />
+                        <f:selectItem itemValue="FR" itemLabel="França" />
+                        <f:selectItem itemValue="IN" itemLabel="Índia" />
+                    </p:selectOneMenu>
+
                     <p:outputLabel for="tipo" value="Tipo de Documento:" styleClass="label" />
                     <p:selectOneMenu id="tipo" value="#{consultaPessoaBean.pessoaSelecionada.tipoDocumento}"
                                      style="width:100%;">

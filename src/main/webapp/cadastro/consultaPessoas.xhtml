@@ -20,7 +20,7 @@
                                      var="p"
                                      paginator="true"
                                      paginatorPosition="bottom"
-                                     rows="7"
+                                     rows="9"
                                      autoLayout="true"
                                      responsiveLayout="scroll"
                                      emptyMessage="Nenhuma pessoa cadastrada."
@@ -44,6 +44,10 @@
                                 <h:outputText value="#{p.data}">
                                     <f:convertDateTime pattern="dd/MM/yyyy" />
                                 </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="País" style="width:20%;">
+                                #{p.pais}
                             </p:column>
 
                             <p:column headerText="CPF / CNPJ" style="width:17%;">

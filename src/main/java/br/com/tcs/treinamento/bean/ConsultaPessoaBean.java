@@ -142,6 +142,10 @@ public class ConsultaPessoaBean implements Serializable {
         if (pessoaSelecionada.getEmail() == null || pessoaSelecionada.getEmail().trim().isEmpty()) {
             erros.add("E-mail não informado.");
         }
+
+        if (pessoaSelecionada.getPais() == null) {
+            erros.add("País não informado.");
+        }
         if (pessoaSelecionada.getData() == null) {
             erros.add("Data de nascimento não informada.");
         }
