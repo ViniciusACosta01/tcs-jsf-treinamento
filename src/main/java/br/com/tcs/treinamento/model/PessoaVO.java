@@ -12,6 +12,7 @@ public class PessoaVO implements Serializable {
     private String email;
     private Date data;
     private String tipoDocumento; // "CPF" ou "CNPJ"
+    private String pais;
     private String numeroCPF;
     private String numeroCNPJ;
     private Double rendaMensal;
@@ -19,12 +20,13 @@ public class PessoaVO implements Serializable {
     private Date dataManutencao;
     private Boolean ativo = true;
 
-    public PessoaVO(Long id,String nome, Integer idade, String email, Date data, String tipoDocumento, String numeroCNPJ, String numeroCPF, Double rendaMensal, Date dataManutencao, String motivoManutencao, Boolean ativo) {
+    public PessoaVO(Long id,String nome, Integer idade, String email, Date data, String tipoDocumento, String pais, String numeroCNPJ, String numeroCPF, Double rendaMensal, Date dataManutencao, String motivoManutencao, Boolean ativo) {
         this.id = id;
         this.nome = nome;
         this.idade = idade;
         this.email = email;
         this.data = data;
+        this.pais = pais;
         this.tipoDocumento = tipoDocumento;
         this.numeroCNPJ = numeroCNPJ;
         this.numeroCPF = numeroCPF;
@@ -56,6 +58,10 @@ public class PessoaVO implements Serializable {
     public Double getRendaMensal() {return rendaMensal;}
 
     public void setRendaMensal(Double rendaMensal) {this.rendaMensal = rendaMensal;}
+
+    public String getPais() {return pais;}
+
+    public void setPais(String pais) {this.pais = pais;}
 
     public String getEmail() {
         return email;

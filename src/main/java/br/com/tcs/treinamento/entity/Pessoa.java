@@ -39,6 +39,8 @@ public class Pessoa implements Serializable {
 
     private Double rendaMensal;
 
+    private String pais;
+
     // Número do CPF (caso tipoDocumento seja CPF)
     private String numeroCPF;
 
@@ -62,13 +64,14 @@ public class Pessoa implements Serializable {
 
 
     // Construtor completo (opcional para facilitar a criação)
-    public Pessoa(String nome, Integer idade, String email, Date data, String tipoDocumento, Double rendaMensal,
+    public Pessoa(String nome, Integer idade, String email, Date data, String tipoDocumento, String pais, Double rendaMensal,
                   String numeroCPF, String numeroCNPJ, String motivoManutencao, Date dataManutencao, Boolean ativo) {
         this.nome = nome;
         this.idade = idade;
         this.email = email;
         this.data = data;
         this.tipoDocumento = tipoDocumento;
+        this.pais = pais;
         this.numeroCPF = numeroCPF;
         this.numeroCNPJ = numeroCNPJ;
         this.motivoManutencao = motivoManutencao;
@@ -130,6 +133,10 @@ public class Pessoa implements Serializable {
     public void setTipoDocumento(String tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
     }
+
+    public String getPais() {return pais;}
+
+    public void setPais(String pais) {this.pais = pais;}
 
     public String getNumeroCPF() {
         return numeroCPF;
@@ -201,6 +208,7 @@ public class Pessoa implements Serializable {
                 ", email='" + email + '\'' +
                 ", data=" + data +
                 ", tipoDocumento='" + tipoDocumento + '\'' +
+                ", pais='" + pais + '\'' +
                 ", numeroCPF='" + numeroCPF + '\'' +
                 ", numeroCNPJ='" + numeroCNPJ + '\'' +
                 ", rendaMensal=" + rendaMensal + '\'' +

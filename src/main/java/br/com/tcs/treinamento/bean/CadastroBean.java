@@ -65,6 +65,7 @@ public class CadastroBean implements Serializable {
         cadastrarPessoa.setTipoDocumento(null);
         cadastrarPessoa.setNumeroCPF(null);
         cadastrarPessoa.setNumeroCNPJ(null);
+        cadastrarPessoa.setPais(null);
         errorMessage = null;
     }
 
@@ -83,6 +84,11 @@ public class CadastroBean implements Serializable {
         if (cadastrarPessoa.getData() == null) {
             erros.add("Data de nascimento não informada.");
         }
+
+        if (cadastrarPessoa.getPais() == null) {
+            erros.add("País não informado.");
+        }
+
         if (cadastrarPessoa.getTipoDocumento() == null || cadastrarPessoa.getTipoDocumento().trim().isEmpty()) {
             erros.add("Tipo de documento não informado.");
         } else {
