@@ -41,14 +41,17 @@
                     pattern="dd/MM/yyyy" showIcon="true" />
 
                     <p:outputLabel for="pais" value="País:" styleClass="label" />
-                    <p:selectOneMenu id="pais" value="#{cadastroBean.cadastrarPessoa.pais}" />
-                    <f:selectItem itemValue="BR" itemLabel="Brasil" />
-                    <f:selectItem itemValue="CA" itemLabel="Canadá" />
-                    <f:selectItem itemValue="CL" itemLabel="Chile" />
-                    <f:selectItem itemValue="EQ" itemLabel="Equador" />
-                    <f:selectItem itemValue="US" itemLabel="Estados Unidos" />
-                    <f:selectItem itemValue="FR" itemLabel="França" />
-                    <f:selectItem itemValue="IN" itemLabel="India" />
+                    <p:selectOneMenu id="pais" value="#{cadastroBean.cadastrarPessoa.pais}" style="width:100%;">
+                        <f:selectItem itemValue="" itemLabel="Selecione" noSelectionOption="true"/>
+                        <f:selectItem itemValue="BR" itemLabel="Brasil" />
+                        <f:selectItem itemValue="CA" itemLabel="Canadá" />
+                        <f:selectItem itemValue="CL" itemLabel="Chile" />
+                        <f:selectItem itemValue="EQ" itemLabel="Equador" />
+                        <f:selectItem itemValue="US" itemLabel="Estados Unidos" />
+                        <f:selectItem itemValue="FR" itemLabel="França" />
+                        <f:selectItem itemValue="IN" itemLabel="Índia" />
+                    </p:selectOneMenu>
+
 
 
                     <p:outputLabel for="idade" value="Idade:" styleClass="label" />
