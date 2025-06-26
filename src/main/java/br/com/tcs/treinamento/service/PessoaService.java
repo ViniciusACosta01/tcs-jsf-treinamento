@@ -7,6 +7,7 @@ public interface PessoaService {
     void cadastrar(Pessoa pessoa);
     Pessoa buscarPorId(Long id);
     List<Pessoa> listar();
+    List<Pessoa> listarEmpresas();
     void atualizar(Pessoa pessoa);
     void excluir(Pessoa pessoa);
 }

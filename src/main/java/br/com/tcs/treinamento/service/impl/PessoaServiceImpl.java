@@ -25,6 +25,7 @@ public class PessoaServiceImpl implements PessoaService {
         return pessoaDAO.listar();
     }
 
+
     @Override
     public void atualizar(Pessoa pessoa) {
         pessoaDAO.atualizar(pessoa);
@@ -34,4 +35,6 @@ public class PessoaServiceImpl implements PessoaService {
     public void excluir(Pessoa pessoa) {
         pessoaDAO.excluir(pessoa);
     }
+
+
 }

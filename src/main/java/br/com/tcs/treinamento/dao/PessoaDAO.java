@@ -44,6 +44,15 @@ public class PessoaDAO {
         return em.createQuery("SELECT p FROM Pessoa p", Pessoa.class).getResultList();
     }
 
+    public List<Pessoa> listarEmpresas() {
+        return this.listar().stream()
+                .filter(p -> "CNPJ".equalsIgnoreCase(p.getTipoDocumento()))
+                .filter(p -> Boolean.TRUE.equals(p.getAtivo()))
+                .toList();
+    }
+
+
+
     // Método para atualizar os dados de uma Pessoa
     public Pessoa atualizar(Pessoa pessoa) {
         try {
