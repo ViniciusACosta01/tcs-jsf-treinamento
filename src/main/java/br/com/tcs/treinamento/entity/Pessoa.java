@@ -72,12 +72,12 @@ public class Pessoa implements Serializable {
         this.data = data;
         this.tipoDocumento = tipoDocumento;
         this.pais = pais;
+        this.rendaMensal = rendaMensal;
         this.numeroCPF = numeroCPF;
         this.numeroCNPJ = numeroCNPJ;
         this.motivoManutencao = motivoManutencao;
         this.dataManutencao = dataManutencao;
         this.ativo = ativo;
-        this.rendaMensal = rendaMensal;
     }
 
     // Getters e Setters
