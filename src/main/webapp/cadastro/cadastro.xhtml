@@ -22,10 +22,17 @@
 
                 <!-- Formulário com painel de duas colunas -->
                 <p:panelGrid columns="2" columnClasses="label,value" style="width:100%; margin-bottom:1em;">
+                    <p:outputLabel for="tipo" value="Tipo de cadastro:" styleClass="label" />
+                    <p:selectOneRadio id="tipo" value="#{cadastroBean.cadastrarPessoa.tipoDocumento}"
+                                      style="width:100%;">
+                        <f:selectItem itemLabel="CPF" itemValue="CPF" />
+                        <f:selectItem itemLabel="CNPJ" itemValue="CNPJ" />
+                        <p:ajax update="docPanel" process="@this" />
+                    </p:selectOneRadio>
                     <p:outputLabel for="nome" value="Nome Completo:"
-                                   style="text-align: left; white-space: nowrap;" />
+                    style="text-align: left; white-space: nowrap;" />
                     <p:inputText id="nome" value="#{cadastroBean.cadastrarPessoa.nome}"
-                                 style="width:100%;" />
+                    style="width:100%;" />
 
 
                     <p:outputLabel for="renda" value="Renda Mensal:" styleClass="label" />
@@ -56,16 +63,8 @@
 
                     <p:outputLabel for="idade" value="Idade:" styleClass="label" />
                     <p:inputText id="idade" value="#{cadastroBean.cadastrarPessoa.idade}"
-                                 style="width:4em;" />
+                    style="width:4em;" />
 
-                    <p:outputLabel for="tipo" value="Tipo de cadastro:" styleClass="label" />
-                    <p:selectOneMenu id="tipo" value="#{cadastroBean.cadastrarPessoa.tipoDocumento}"
-                                     style="width:100%;">
-                        <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                        <f:selectItem itemLabel="CPF" itemValue="CPF" />
-                        <f:selectItem itemLabel="CNPJ" itemValue="CNPJ" />
-                        <p:ajax update="docPanel" process="@this" />
-                    </p:selectOneMenu>
 
                     <!-- Bloco para CPF / CNPJ -->
                     <h:panelGroup id="docPanel" layout="block">
@@ -86,6 +85,8 @@
                                      autoClear="true" unmask="true"
                                      disabled="#{cadastroBean.cadastrarPessoa.tipoDocumento ne 'CNPJ'}"
                                      style="width:100%; #{cadastroBean.cadastrarPessoa.tipoDocumento eq 'CNPJ' ? '' : 'display:none;'}" />
+
+
                     </h:panelGroup>
                 </p:panelGrid>
 
