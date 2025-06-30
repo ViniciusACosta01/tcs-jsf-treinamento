@@ -92,26 +92,49 @@
                                         </ui:fragment>
                                     </p:column>
 
-                                    <p:column headerText="Ações" style="text-align:center; width:300px;">
+                                    <p:column headerText="Ações" style="text-align:center; width:350px;">
                                         <ui:fragment rendered="#{not empty p.numeroCPF}">
-                                            <div style="display:flex; justify-content:center; align-items:center; gap:10px;">
+                                            <div style="display:flex; justify-content:center; align-items:center; gap:5px;">
                                                 <p:commandButton value="Alterar"
                                                                  action="#{consultaPessoaBean.prepararEdicao(p)}"
                                                                  icon="pi pi-pencil"
                                                                  styleClass="ui-button-secondary"
-                                                                 style="width:140px;"
+                                                                 style="width:100px;"
                                                                  update="@form" />
+                                                <p:commandButton value="Renda"
+                                                                 action="#{consultaPessoaBean.prepararEdicaoRenda(p)}"
+                                                                 icon="pi pi-dollar"
+                                                                 styleClass="ui-button-warning"
+                                                                 style="width:100px;"
+                                                                 oncomplete="PF('dialogRenda').show()"
+                                                                 update=":formRenda"
+                                                                 process="@this" />
                                                 <p:commandButton value="Excluir"
                                                                  action="#{consultaPessoaBean.prepararExclusao(p)}"
                                                                  icon="pi pi-trash"
                                                                  styleClass="ui-button-secondary"
-                                                                 style="width:140px;"
+                                                                 style="width:100px;"
                                                                  update="@form" />
                                             </div>
+
                                         </ui:fragment>
                                     </p:column>
 
                                 </p:dataTable>
+                                <div style="text-align: right;">
+                                    <p:commandButton value="Exportar PDF"
+                                                     action="#{consultaPessoaBean.exportarPdfCPF}"
+                                                     icon="pi pi-file-pdf"
+                                                     styleClass="ui-button-secondary"
+                                                     style="margin-right:10px;"
+                                                     ajax="false" />
+
+                                    <p:commandButton value="Exportar Excel"
+                                                     action="#{consultaPessoaBean.exportarExcelCPF}"
+                                                     icon="pi pi-file-excel"
+                                                     styleClass="ui-button-secondary"
+                                                     ajax="false" />
+                                </div>
                             </p:tab>
 
                             <!-- Aba para Pessoas Jurídicas (CNPJ) -->
@@ -188,26 +211,49 @@
                                         </ui:fragment>
                                     </p:column>
 
-                                    <p:column headerText="Ações" style="text-align:center; width:300px;">
+                                    <p:column headerText="Ações" style="text-align:center; width:350px;">
                                         <ui:fragment rendered="#{not empty p.numeroCNPJ}">
-                                            <div style="display:flex; justify-content:center; align-items:center; gap:10px;">
+                                            <div style="display:flex; justify-content:center; align-items:center; gap:5px;">
                                                 <p:commandButton value="Alterar"
                                                                  action="#{consultaPessoaBean.prepararEdicao(p)}"
                                                                  icon="pi pi-pencil"
                                                                  styleClass="ui-button-secondary"
-                                                                 style="width:140px;"
+                                                                 style="width:100px;"
                                                                  update="@form" />
+                                                <p:commandButton value="Renda"
+                                                                 action="#{consultaPessoaBean.prepararEdicaoRenda(p)}"
+                                                                 icon="pi pi-dollar"
+                                                                 styleClass="ui-button-warning"
+                                                                 style="width:100px;"
+                                                                 oncomplete="PF('dialogRenda').show()"
+                                                                 update=":formRenda"
+                                                                 process="@this" />
                                                 <p:commandButton value="Excluir"
                                                                  action="#{consultaPessoaBean.prepararExclusao(p)}"
                                                                  icon="pi pi-trash"
                                                                  styleClass="ui-button-secondary"
-                                                                 style="width:140px;"
+                                                                 style="width:100px;"
                                                                  update="@form" />
                                             </div>
+
+
                                         </ui:fragment>
                                     </p:column>
 
                                 </p:dataTable>
+                                <div style="text-align: right;">
+                                    <p:commandButton value="Exportar PDF"
+                                                     action="#{consultaPessoaBean.exportarPdfCNPJ}"
+                                                     icon="pi pi-file-pdf"
+                                                     styleClass="ui-button-secondary"
+                                                     style="margin-right:10px;"
+                                                     ajax="false" />
+                                    <p:commandButton value="Exportar Excel"
+                                                     action="#{consultaPessoaBean.exportarExcelCNPJ}"
+                                                     icon="pi pi-file-excel"
+                                                     styleClass="ui-button-secondary"
+                                                     ajax="false" />
+                                </div>
                             </p:tab>
 
                             <!-- Aba para Todas as Pessoas -->
@@ -266,46 +312,120 @@
                                         #{p.ativo ? 'Ativo' : 'Inativo'}
                                     </p:column>
 
-                                    <p:column headerText="Ações" style="text-align:center; width:300px;">
-                                        <div style="display:flex; justify-content:center; align-items:center; gap:10px;">
+                                    <p:column headerText="Ações" style="text-align:center; width:350px;">
+                                        <div style="display:flex; justify-content:center; align-items:center; gap:5px;">
                                             <p:commandButton value="Alterar"
                                                              action="#{consultaPessoaBean.prepararEdicao(p)}"
                                                              icon="pi pi-pencil"
                                                              styleClass="ui-button-secondary"
-                                                             style="width:140px;"
+                                                             style="width:100px;"
                                                              update="@form" />
+                                            <p:commandButton value="Renda"
+                                                             action="#{consultaPessoaBean.prepararEdicaoRenda(p)}"
+                                                             icon="pi pi-dollar"
+                                                             styleClass="ui-button-warning"
+                                                             style="width:100px;"
+                                                             oncomplete="PF('dialogRenda').show()"
+                                                             update=":formRenda"
+                                                             process="@this" />
                                             <p:commandButton value="Excluir"
                                                              action="#{consultaPessoaBean.prepararExclusao(p)}"
                                                              icon="pi pi-trash"
                                                              styleClass="ui-button-secondary"
-                                                             style="width:140px;"
+                                                             style="width:100px;"
                                                              update="@form" />
                                         </div>
+
+
                                     </p:column>
 
+
                                 </p:dataTable>
+                                <div style="text-align: right;">
+                                    <p:commandButton value="Exportar PDF"
+                                                     action="#{consultaPessoaBean.exportarPdfTodas}"
+                                                     icon="pi pi-file-pdf"
+                                                     styleClass="ui-button-secondary"
+                                                     style="margin-right:10px;"
+                                                     ajax="false" />
+                                    <p:commandButton value="Exportar Excel"
+                                                     action="#{consultaPessoaBean.exportarExcelTodas}"
+                                                     icon="pi pi-file-excel"
+                                                     styleClass="ui-button-secondary"
+                                                     ajax="false" />
+                                </div>
                             </p:tab>
                         </p:tabView>
 
                         <br/>
 
-                        <div style="text-align: right;">
-                            <p:commandButton value="Exportar PDF"
-                                             action="#{consultaPessoaBean.exportarPdf}"
-                                             icon="pi pi-file-pdf"
-                                             styleClass="ui-button-secondary"
-                                             style="margin-right:10px;" />
-                            <p:commandButton value="Exportar Excel"
-                                             action="#{consultaPessoaBean.exportarExcel}"
-                                             icon="pi pi-file-excel"
-                                             styleClass="ui-button-secondary" />
-                        </div>
+
 
                     </div>
                 </div>
 
             </p:panel>
         </h:form>
+
+        <!-- Dialog para editar renda mensal -->
+        <p:dialog header="Editar Renda Mensal"
+                  widgetVar="dialogRenda"
+                  modal="true"
+                  width="450"
+                  height="300"
+                  resizable="false"
+                  draggable="true"
+                  showEffect="fade"
+                  hideEffect="fade">
+
+            <h:form id="formRenda">
+                <p:panel style="border:none;">
+                    <h:panelGrid columns="2" cellpadding="8" style="width:100%;">
+                        <p:outputLabel for="nomePessoa" value="Nome:" />
+                        <h:outputText id="nomePessoa"
+                                      value="#{consultaPessoaBean.pessoaSelecionada != null ? consultaPessoaBean.pessoaSelecionada.nome : ''}"
+                                      style="font-weight:bold;" />
+
+                        <p:outputLabel for="rendaAtual" value="Renda Atual:" />
+                        <h:outputText id="rendaAtual"
+                                      value="#{consultaPessoaBean.pessoaSelecionada != null ? consultaPessoaBean.pessoaSelecionada.rendaMensal : 0}">
+                            <f:convertNumber type="currency" currencySymbol="R$ " locale="pt_BR" />
+                        </h:outputText>
+
+                        <p:outputLabel for="novaRenda" value="Nova Renda: *" />
+                        <p:inputNumber id="novaRenda"
+                                       value="#{consultaPessoaBean.pessoaSelecionada.rendaMensal}"
+                                       required="true"
+                                       requiredMessage="Nova renda é obrigatória"
+                                       style="width:100%;"
+                                       symbol="R$ "
+                                       symbolPosition="p"
+                                       decimalSeparator=","
+                                       thousandSeparator="."
+                                       decimalPlaces="2" />
+                    </h:panelGrid>
+
+                    <p:messages for="novaRenda" showDetail="true" closable="true" />
+
+                    <div style="text-align:center; margin-top:25px;">
+                        <p:commandButton value="Salvar"
+                                         action="#{consultaPessoaBean.salvarRendaMensal}"
+                                         icon="pi pi-check"
+                                         styleClass="ui-button-success"
+                                         style="margin-right:15px;"
+                                         update=":formConsulta"
+                                         oncomplete="if(!args.validationFailed) PF('dialogRenda').hide()" />
+
+                        <p:commandButton value="Cancelar"
+                                         icon="pi pi-times"
+                                         styleClass="ui-button-secondary"
+                                         onclick="PF('dialogRenda').hide()"
+                                         type="button" />
+                    </div>
+                </p:panel>
+            </h:form>
+        </p:dialog>
+
     </ui:define>
 
     <ui:define name="footer">
