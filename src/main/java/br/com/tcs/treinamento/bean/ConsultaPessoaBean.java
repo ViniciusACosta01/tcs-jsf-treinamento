@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -115,7 +118,7 @@ public class ConsultaPessoaBean implements Serializable {
             try {
                 Pessoa pessoaAtual = pessoaService.buscarPorId(pessoaSelecionada.getId());
 
-                // Atualiza apenas a renda mensal
+
                 pessoaAtual.setRendaMensal(pessoaSelecionada.getRendaMensal());
                 pessoaAtual.setDataManutencao(new Date());
 
@@ -203,6 +206,19 @@ public class ConsultaPessoaBean implements Serializable {
         }
     }
 
+    public void limpar() {
+        pessoaSelecionada.setNome(null);
+        pessoaSelecionada.setIdade(null);
+        pessoaSelecionada.setEmail(null);
+        pessoaSelecionada.setData(null);
+        pessoaSelecionada.setTipoDocumento(null);
+        pessoaSelecionada.setNumeroCPF(null);
+        pessoaSelecionada.setNumeroCNPJ(null);
+        pessoaSelecionada.setRendaMensal(null);
+        pessoaSelecionada.setPais(null);
+        errorMessage = null;
+    }
+
     public void validarCampos() {
         List<String> erros = new ArrayList<>();
 
@@ -246,6 +262,22 @@ public class ConsultaPessoaBean implements Serializable {
             PrimeFaces.current().executeScript("PF('errorDialog').show();");
         } else {
             PrimeFaces.current().executeScript("PF('confirmDialog').show();");
+        }
+    }
+
+    public void calcularIdade() {
+        if (pessoaSelecionada != null && pessoaSelecionada.getData() != null) {
+            LocalDate dataNascimento = pessoaSelecionada.getData().toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+
+            LocalDate dataAtual = LocalDate.now();
+
+            int idade = Period.between(dataNascimento, dataAtual).getYears();
+
+            pessoaSelecionada.setIdade(idade);
+        } else if (pessoaSelecionada != null) {
+            pessoaSelecionada.setIdade(null);
         }
     }
 

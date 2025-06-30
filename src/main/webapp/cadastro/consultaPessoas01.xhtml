@@ -116,7 +116,6 @@
                                                                  style="width:100px;"
                                                                  update="@form" />
                                             </div>
-
                                         </ui:fragment>
                                     </p:column>
 
@@ -235,8 +234,6 @@
                                                                  style="width:100px;"
                                                                  update="@form" />
                                             </div>
-
-
                                         </ui:fragment>
                                     </p:column>
 
@@ -335,11 +332,7 @@
                                                              style="width:100px;"
                                                              update="@form" />
                                         </div>
-
-
                                     </p:column>
-
-
                                 </p:dataTable>
                                 <div style="text-align: right;">
                                     <p:commandButton value="Exportar PDF"
@@ -392,7 +385,7 @@
                             <f:convertNumber type="currency" currencySymbol="R$ " locale="pt_BR" />
                         </h:outputText>
 
-                        <p:outputLabel for="novaRenda" value="Nova Renda: *" />
+                        <p:outputLabel for="novaRenda" value="Nova Renda: " />
                         <p:inputNumber id="novaRenda"
                                        value="#{consultaPessoaBean.pessoaSelecionada.rendaMensal}"
                                        required="true"

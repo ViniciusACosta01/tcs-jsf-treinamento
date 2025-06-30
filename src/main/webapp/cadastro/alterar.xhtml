@@ -27,21 +27,23 @@
                     <p:inputText id="nome" value="#{consultaPessoaBean.pessoaSelecionada.nome}"
                                  style="width:100%;" />
 
-                    <p:outputLabel for="idade" value="Idade:" styleClass="label" />
-                    <p:inputText id="idade" value="#{consultaPessoaBean.pessoaSelecionada.idade}"
-                                 style="width:4em;" />
-
-                    <p:outputLabel for="renda" value="Renda Mensal:" styleClass="label" />
-                    <p:inputText id="renda" value="#{consultaPessoaBean.pessoaSelecionada.rendaMensal}"
-                                 style="width:100%;" />
 
                     <p:outputLabel for="email" value="E-mail:" styleClass="label" />
                     <p:inputText id="email" value="#{consultaPessoaBean.pessoaSelecionada.email}"
-                                 style="width:100%;" />
+                    style="width:100%;" />
 
                     <p:outputLabel for="data" value="Data de Nascimento:" styleClass="label" />
                     <p:calendar id="data" value="#{consultaPessoaBean.pessoaSelecionada.data}"
-                                pattern="dd/MM/yyyy" showIcon="true" />
+                                pattern="dd/MM/yyyy" showIcon="true">
+                        <p:ajax event="dateSelect" listener="#{consultaPessoaBean.calcularIdade}"
+                                update="idade" process="@this" />
+                        <p:ajax event="blur" listener="#{consultaPessoaBean.calcularIdade}"
+                                update="idade" process="@this" />
+                    </p:calendar>
+
+                    <p:outputLabel for="idade" value="Idade:" styleClass="label" />
+                    <p:outputLabel id="idade" value="#{consultaPessoaBean.pessoaSelecionada.idade}"
+                                 style="width:4em;" />
 
                     <p:outputLabel for="pais" value="País:" styleClass="label" />
                     <p:selectOneMenu id="pais" value="#{consultaPessoaBean.pessoaSelecionada.pais}" style="width:100%;">
@@ -53,15 +55,6 @@
                         <f:selectItem itemValue="US" itemLabel="Estados Unidos" />
                         <f:selectItem itemValue="FR" itemLabel="França" />
                         <f:selectItem itemValue="IN" itemLabel="Índia" />
-                    </p:selectOneMenu>
-
-                    <p:outputLabel for="tipo" value="Tipo de Documento:" styleClass="label" />
-                    <p:selectOneMenu id="tipo" value="#{consultaPessoaBean.pessoaSelecionada.tipoDocumento}"
-                                     style="width:100%;">
-                        <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                        <f:selectItem itemLabel="CPF" itemValue="CPF" />
-                        <f:selectItem itemLabel="CNPJ" itemValue="CNPJ" />
-                        <p:ajax update="docPanel" process="@this" />
                     </p:selectOneMenu>
 
                     <!-- Bloco para CPF / CNPJ -->
@@ -121,7 +114,7 @@
                 <f:facet name="footer">
                     <p:commandButton value="Ok"
                                      type="button"
-                                     onclick="PF('successDialog').hide(); window.location='#{request.contextPath}/cadastro/consultaPessoas.xhtml';"
+                                     onclick="PF('successDialog').hide(); window.location='#{request.contextPath}/cadastro/consultaPessoas01.xhtml';"
                                      icon="pi pi-check" />
                 </f:facet>
             </p:dialog>

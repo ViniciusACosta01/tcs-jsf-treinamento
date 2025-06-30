@@ -45,7 +45,16 @@
 
                     <p:outputLabel for="data" value="Data de Nascimento:" styleClass="label" />
                     <p:calendar id="data" value="#{cadastroBean.cadastrarPessoa.data}"
-                    pattern="dd/MM/yyyy" showIcon="true" />
+                                pattern="dd/MM/yyyy" showIcon="true">
+                        <p:ajax event="dateSelect" listener="#{cadastroBean.calcularIdade}"
+                                update="idade" process="@this" />
+                        <p:ajax event="blur" listener="#{cadastroBean.calcularIdade}"
+                                update="idade" process="@this" />
+                    </p:calendar>
+
+                    <p:outputLabel for="idade" value="Idade:" styleClass="label" />
+                    <p:outputLabel id="idade" value="#{cadastroBean.cadastrarPessoa.idade}"
+                                   style="width:4em;" />
 
                     <p:outputLabel for="pais" value="País:" styleClass="label" />
                     <p:selectOneMenu id="pais" value="#{cadastroBean.cadastrarPessoa.pais}" style="width:100%;">
@@ -59,11 +68,6 @@
                         <f:selectItem itemValue="IN" itemLabel="Índia" />
                     </p:selectOneMenu>
 
-
-
-                    <p:outputLabel for="idade" value="Idade:" styleClass="label" />
-                    <p:inputText id="idade" value="#{cadastroBean.cadastrarPessoa.idade}"
-                    style="width:4em;" />
 
 
                     <!-- Bloco para CPF / CNPJ -->
@@ -85,7 +89,6 @@
                                      autoClear="true" unmask="true"
                                      disabled="#{cadastroBean.cadastrarPessoa.tipoDocumento ne 'CNPJ'}"
                                      style="width:100%; #{cadastroBean.cadastrarPessoa.tipoDocumento eq 'CNPJ' ? '' : 'display:none;'}" />
-
 
                     </h:panelGroup>
                 </p:panelGrid>

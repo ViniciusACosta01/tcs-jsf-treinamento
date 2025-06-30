@@ -7,6 +7,9 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 
 import br.com.tcs.treinamento.entity.Pessoa;
 import br.com.tcs.treinamento.model.PessoaVO;
@@ -138,6 +141,22 @@ public class CadastroBean implements Serializable {
         ois.defaultReadObject();
         // Re-inicializa o serviço para evitar que seja nulo ou uma instância não serializável
         this.pessoaService = new PessoaServiceImpl();
+    }
+
+    public void calcularIdade() {
+        if (cadastrarPessoa.getData() != null) {
+            LocalDate dataNascimento = cadastrarPessoa.getData().toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+
+            LocalDate dataAtual = LocalDate.now();
+
+            int idade = Period.between(dataNascimento, dataAtual).getYears();
+
+            cadastrarPessoa.setIdade(idade);
+        } else {
+            cadastrarPessoa.setIdade(null);
+        }
     }
 
 }
