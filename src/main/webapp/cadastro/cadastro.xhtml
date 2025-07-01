@@ -140,7 +140,7 @@
         <!-- JavaScript para formatação dos campos -->
         <script type="text/javascript">
             //<![CDATA[
-            // Variáveis para controlar o estado dos campos
+
             let cpfDigitado = '';
             let cnpjDigitado = '';
             let isInitialized = false;
@@ -159,7 +159,6 @@
             }
 
             function formatarCPF(campo) {
-                // Se não foi inicializado pelo evento keydown, processa normalmente
                 if (!isInitialized) {
                     let valor = campo.value.replace(/\D/g, '');
 
@@ -169,10 +168,8 @@
                         return;
                     }
 
-                    // Remove zeros à esquerda para obter apenas os dígitos significativos
                     cpfDigitado = valor.replace(/^0+/, '') || '';
 
-                    // Aplica formatação
                     valor = valor.padStart(11, '0');
                     valor = valor.substring(0, 11);
                     valor = valor.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
@@ -182,7 +179,6 @@
             }
 
             function formatarCNPJ(campo) {
-                // Se não foi inicializado pelo evento keydown, processa normalmente
                 if (!isInitialized) {
                     let valor = campo.value.replace(/\D/g, '');
 
@@ -192,10 +188,8 @@
                         return;
                     }
 
-                    // Remove zeros à esquerda para obter apenas os dígitos significativos
                     cnpjDigitado = valor.replace(/^0+/, '') || '';
 
-                    // Aplica formatação
                     valor = valor.padStart(14, '0');
                     valor = valor.substring(0, 14);
                     valor = valor.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
@@ -204,7 +198,6 @@
                 isInitialized = false;
             }
 
-            // Função para aplicar formatação mantendo a sequência
             function aplicarFormatacao(campo, digitosDigitados, isCPF) {
                 let valor;
                 if (isCPF) {
@@ -220,17 +213,14 @@
                 isInitialized = true;
             }
 
-            // Função para permitir digitação mantendo a sequência
             function adicionarEventosDigitacao() {
                 document.addEventListener('keydown', function(e) {
                     const campo = e.target;
 
-                    // Verifica se é um campo CPF ou CNPJ
                     if (campo.id && (campo.id.includes('cpf') || campo.id.includes('cnpj'))) {
                         const isCPF = campo.id.includes('cpf');
                         const maxLength = isCPF ? 11 : 14;
 
-                        // Se pressionar backspace ou delete
                         if (e.key === 'Backspace' || e.key === 'Delete') {
                             e.preventDefault();
 
@@ -246,7 +236,7 @@
                                 aplicarFormatacao(campo, cnpjDigitado, false);
                             }
                         }
-                        // Se pressionar um número
+
                         else if (/\d/.test(e.key)) {
                             e.preventDefault();
 
@@ -265,7 +255,6 @@
                     }
                 });
 
-                // Sincroniza quando o campo recebe foco
                 document.addEventListener('focus', function(e) {
                     const campo = e.target;
                     if (campo.id && campo.id.includes('cpf')) {
@@ -277,7 +266,7 @@
                     }
                 }, true);
 
-                // Limpa as variáveis quando o campo perde o foco
+
                 document.addEventListener('blur', function(e) {
                     const campo = e.target;
                     if (campo.id && (campo.id.includes('cpf') || campo.id.includes('cnpj'))) {

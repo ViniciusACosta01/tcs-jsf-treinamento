@@ -24,7 +24,7 @@
                                              var="p"
                                              paginator="true"
                                              paginatorPosition="bottom"
-                                             rows="9"
+                                             rows="15"
                                              autoLayout="true"
                                              responsiveLayout="scroll"
                                              emptyMessage="Nenhuma pessoa física (CPF) cadastrada."
@@ -95,12 +95,6 @@
                                     <p:column headerText="Ações" style="text-align:center; width:350px;">
                                         <ui:fragment rendered="#{not empty p.numeroCPF}">
                                             <div style="display:flex; justify-content:center; align-items:center; gap:5px;">
-                                                <p:commandButton value="Alterar"
-                                                                 action="#{consultaPessoaBean.prepararEdicao(p)}"
-                                                                 icon="pi pi-pencil"
-                                                                 styleClass="ui-button-secondary"
-                                                                 style="width:100px;"
-                                                                 update="@form" />
                                                 <p:commandButton value="Renda"
                                                                  action="#{consultaPessoaBean.prepararEdicaoRenda(p)}"
                                                                  icon="pi pi-dollar"
@@ -109,6 +103,12 @@
                                                                  oncomplete="PF('dialogRenda').show()"
                                                                  update=":formRenda"
                                                                  process="@this" />
+                                                <p:commandButton value="Alterar"
+                                                                 action="#{consultaPessoaBean.prepararEdicao(p)}"
+                                                                 icon="pi pi-pencil"
+                                                                 styleClass="ui-button-secondary"
+                                                                 style="width:100px;"
+                                                                 update="@form" />
                                                 <p:commandButton value="Excluir"
                                                                  action="#{consultaPessoaBean.prepararExclusao(p)}"
                                                                  icon="pi pi-trash"
@@ -142,7 +142,7 @@
                                              var="p"
                                              paginator="true"
                                              paginatorPosition="bottom"
-                                             rows="9"
+                                             rows="15"
                                              autoLayout="true"
                                              responsiveLayout="scroll"
                                              emptyMessage="Nenhuma pessoa jurídica (CNPJ) cadastrada."
@@ -213,12 +213,6 @@
                                     <p:column headerText="Ações" style="text-align:center; width:350px;">
                                         <ui:fragment rendered="#{not empty p.numeroCNPJ}">
                                             <div style="display:flex; justify-content:center; align-items:center; gap:5px;">
-                                                <p:commandButton value="Alterar"
-                                                                 action="#{consultaPessoaBean.prepararEdicao(p)}"
-                                                                 icon="pi pi-pencil"
-                                                                 styleClass="ui-button-secondary"
-                                                                 style="width:100px;"
-                                                                 update="@form" />
                                                 <p:commandButton value="Renda"
                                                                  action="#{consultaPessoaBean.prepararEdicaoRenda(p)}"
                                                                  icon="pi pi-dollar"
@@ -227,6 +221,12 @@
                                                                  oncomplete="PF('dialogRenda').show()"
                                                                  update=":formRenda"
                                                                  process="@this" />
+                                                <p:commandButton value="Alterar"
+                                                                 action="#{consultaPessoaBean.prepararEdicao(p)}"
+                                                                 icon="pi pi-pencil"
+                                                                 styleClass="ui-button-secondary"
+                                                                 style="width:100px;"
+                                                                 update="@form" />
                                                 <p:commandButton value="Excluir"
                                                                  action="#{consultaPessoaBean.prepararExclusao(p)}"
                                                                  icon="pi pi-trash"
@@ -259,7 +259,7 @@
                                              var="p"
                                              paginator="true"
                                              paginatorPosition="bottom"
-                                             rows="9"
+                                             rows="15"
                                              autoLayout="true"
                                              responsiveLayout="scroll"
                                              emptyMessage="Nenhuma pessoa cadastrada."
@@ -311,12 +311,6 @@
 
                                     <p:column headerText="Ações" style="text-align:center; width:350px;">
                                         <div style="display:flex; justify-content:center; align-items:center; gap:5px;">
-                                            <p:commandButton value="Alterar"
-                                                             action="#{consultaPessoaBean.prepararEdicao(p)}"
-                                                             icon="pi pi-pencil"
-                                                             styleClass="ui-button-secondary"
-                                                             style="width:100px;"
-                                                             update="@form" />
                                             <p:commandButton value="Renda"
                                                              action="#{consultaPessoaBean.prepararEdicaoRenda(p)}"
                                                              icon="pi pi-dollar"
@@ -325,6 +319,12 @@
                                                              oncomplete="PF('dialogRenda').show()"
                                                              update=":formRenda"
                                                              process="@this" />
+                                            <p:commandButton value="Alterar"
+                                                             action="#{consultaPessoaBean.prepararEdicao(p)}"
+                                                             icon="pi pi-pencil"
+                                                             styleClass="ui-button-secondary"
+                                                             style="width:100px;"
+                                                             update="@form" />
                                             <p:commandButton value="Excluir"
                                                              action="#{consultaPessoaBean.prepararExclusao(p)}"
                                                              icon="pi pi-trash"

@@ -119,6 +119,158 @@
                 </f:facet>
             </p:dialog>
         </h:form>
+
+        <!-- JavaScript para formatação dos campos -->
+        <script type="text/javascript">
+            //<![CDATA[
+
+            let cpfDigitado = '';
+            let cnpjDigitado = '';
+            let isInitialized = false;
+
+            function inicializarCampo(campo, tipo) {
+                if (campo.value === '' || campo.value === campo.placeholder) {
+                    if (tipo === 'CPF') {
+                        campo.value = '000.000.000-00';
+                        cpfDigitado = '';
+                    } else {
+                        campo.value = '00.000.000/0000-00';
+                        cnpjDigitado = '';
+                    }
+                }
+                isInitialized = true;
+            }
+
+            function formatarCPF(campo) {
+                if (!isInitialized) {
+                    let valor = campo.value.replace(/\D/g, '');
+
+                    if (valor === '') {
+                        campo.value = '000.000.000-00';
+                        cpfDigitado = '';
+                        return;
+                    }
+
+                    cpfDigitado = valor.replace(/^0+/, '') || '';
+
+                    valor = valor.padStart(11, '0');
+                    valor = valor.substring(0, 11);
+                    valor = valor.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+                    campo.value = valor;
+                }
+                isInitialized = false;
+            }
+
+            function formatarCNPJ(campo) {
+                if (!isInitialized) {
+                    let valor = campo.value.replace(/\D/g, '');
+
+                    if (valor === '') {
+                        campo.value = '00.000.000/0000-00';
+                        cnpjDigitado = '';
+                        return;
+                    }
+
+                    cnpjDigitado = valor.replace(/^0+/, '') || '';
+
+                    valor = valor.padStart(14, '0');
+                    valor = valor.substring(0, 14);
+                    valor = valor.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+                    campo.value = valor;
+                }
+                isInitialized = false;
+            }
+
+            function aplicarFormatacao(campo, digitosDigitados, isCPF) {
+                let valor;
+                if (isCPF) {
+                    valor = digitosDigitados.padStart(11, '0');
+                    valor = valor.substring(0, 11);
+                    valor = valor.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+                } else {
+                    valor = digitosDigitados.padStart(14, '0');
+                    valor = valor.substring(0, 14);
+                    valor = valor.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+                }
+                campo.value = valor;
+                isInitialized = true;
+            }
+
+            function adicionarEventosDigitacao() {
+                document.addEventListener('keydown', function(e) {
+                    const campo = e.target;
+
+                    if (campo.id && (campo.id.includes('cpf') || campo.id.includes('cnpj'))) {
+                        const isCPF = campo.id.includes('cpf');
+                        const maxLength = isCPF ? 11 : 14;
+
+                        if (e.key === 'Backspace' || e.key === 'Delete') {
+                            e.preventDefault();
+
+                            if (isCPF) {
+                                if (cpfDigitado.length > 0) {
+                                    cpfDigitado = cpfDigitado.substring(0, cpfDigitado.length - 1);
+                                }
+                                aplicarFormatacao(campo, cpfDigitado, true);
+                            } else {
+                                if (cnpjDigitado.length > 0) {
+                                    cnpjDigitado = cnpjDigitado.substring(0, cnpjDigitado.length - 1);
+                                }
+                                aplicarFormatacao(campo, cnpjDigitado, false);
+                            }
+                        }
+
+                        else if (/\d/.test(e.key)) {
+                            e.preventDefault();
+
+                            if (isCPF) {
+                                if (cpfDigitado.length < maxLength) {
+                                    cpfDigitado += e.key;
+                                }
+                                aplicarFormatacao(campo, cpfDigitado, true);
+                            } else {
+                                if (cnpjDigitado.length < maxLength) {
+                                    cnpjDigitado += e.key;
+                                }
+                                aplicarFormatacao(campo, cnpjDigitado, false);
+                            }
+                        }
+                    }
+                });
+
+                document.addEventListener('focus', function(e) {
+                    const campo = e.target;
+                    if (campo.id && campo.id.includes('cpf')) {
+                        let valor = campo.value.replace(/\D/g, '');
+                        cpfDigitado = valor.replace(/^0+/, '') || '';
+                    } else if (campo.id && campo.id.includes('cnpj')) {
+                        let valor = campo.value.replace(/\D/g, '');
+                        cnpjDigitado = valor.replace(/^0+/, '') || '';
+                    }
+                }, true);
+
+
+                document.addEventListener('blur', function(e) {
+                    const campo = e.target;
+                    if (campo.id && (campo.id.includes('cpf') || campo.id.includes('cnpj'))) {
+                        // Sincroniza novamente para garantir consistência
+                        if (campo.id.includes('cpf')) {
+                            let valor = campo.value.replace(/\D/g, '');
+                            cpfDigitado = valor.replace(/^0+/, '') || '';
+                        } else {
+                            let valor = campo.value.replace(/\D/g, '');
+                            cnpjDigitado = valor.replace(/^0+/, '') || '';
+                        }
+                    }
+                }, true);
+            }
+
+            // Inicializa os eventos quando a página carrega
+            document.addEventListener('DOMContentLoaded', function() {
+                adicionarEventosDigitacao();
+            });
+            //]]>
+        </script>
     </ui:define>
 
     <ui:define name="footer">
