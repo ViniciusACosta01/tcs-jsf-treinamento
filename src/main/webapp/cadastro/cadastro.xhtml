@@ -13,7 +13,7 @@
         <h:form id="formCadastro">
             <!-- Inclui o modal (confirmarModel.xhtml) para reutilização -->
             <ui:include src="/model/confirmarModel.xhtml" >
-                    <ui:param name="modalBean" value="#{cadastroBean}"/>
+                <ui:param name="modalBean" value="#{cadastroBean}"/>
             </ui:include>
 
             <p:panel header="Formulário de Cadastro" style="width:600px;">
@@ -30,18 +30,18 @@
                         <p:ajax update="docPanel" process="@this" />
                     </p:selectOneRadio>
                     <p:outputLabel for="nome" value="Nome Completo:"
-                    style="text-align: left; white-space: nowrap;" />
+                                   style="text-align: left; white-space: nowrap;" />
                     <p:inputText id="nome" value="#{cadastroBean.cadastrarPessoa.nome}"
-                    style="width:100%;" />
+                                 style="width:100%;" />
 
 
                     <p:outputLabel for="renda" value="Renda Mensal:" styleClass="label" />
                     <p:inputText id="renda" value="#{cadastroBean.cadastrarPessoa.rendaMensal}"
-                    style="width:100%;" />
+                                 style="width:100%;" />
 
                     <p:outputLabel for="email" value="E-mail:" styleClass="label" />
                     <p:inputText id="email" value="#{cadastroBean.cadastrarPessoa.email}"
-                    style="width:100%;" />
+                                 style="width:100%;" />
 
                     <p:outputLabel for="data" value="Data de Nascimento:" styleClass="label" />
                     <p:calendar id="data" value="#{cadastroBean.cadastrarPessoa.data}"
@@ -68,27 +68,31 @@
                         <f:selectItem itemValue="IN" itemLabel="Índia" />
                     </p:selectOneMenu>
 
-
-
                     <!-- Bloco para CPF / CNPJ -->
                     <h:panelGroup id="docPanel" layout="block">
                         <!-- Campo CPF: exibido se o tipo for CPF -->
                         <p:outputLabel for="cpf" value="CPF:" styleClass="label"
                                        style="#{cadastroBean.cadastrarPessoa.tipoDocumento eq 'CPF' ? '' : 'display:none;'}" />
-                        <p:inputMask id="cpf" value="#{cadastroBean.cadastrarPessoa.numeroCPF}"
-                                     mask="999.999.999-99"
-                                     autoClear="true" unmask="true"
+                        <p:inputText id="cpf" value="#{cadastroBean.cadastrarPessoa.numeroCPF}"
+                                     placeholder="000.000.000-00"
                                      disabled="#{cadastroBean.cadastrarPessoa.tipoDocumento ne 'CPF'}"
-                                     style="width:100%; #{cadastroBean.cadastrarPessoa.tipoDocumento eq 'CPF' ? '' : 'display:none;'}" />
+                                     style="width:100%; #{cadastroBean.cadastrarPessoa.tipoDocumento eq 'CPF' ? '' : 'display:none;'}"
+                                     onkeyup="formatarCPF(this)"
+                                     onblur="formatarCPF(this)"
+                                     onfocus="inicializarCampo(this, 'CPF')"
+                                     maxlength="14" />
 
                         <!-- Campo CNPJ: exibido se o tipo for CNPJ -->
                         <p:outputLabel for="cnpj" value="CNPJ:" styleClass="label"
                                        style="#{cadastroBean.cadastrarPessoa.tipoDocumento eq 'CNPJ' ? '' : 'display:none;'}" />
-                        <p:inputMask id="cnpj" value="#{cadastroBean.cadastrarPessoa.numeroCNPJ}"
-                                     mask="99.999.999/9999-99"
-                                     autoClear="true" unmask="true"
+                        <p:inputText id="cnpj" value="#{cadastroBean.cadastrarPessoa.numeroCNPJ}"
+                                     placeholder="00.000.000/0000-00"
                                      disabled="#{cadastroBean.cadastrarPessoa.tipoDocumento ne 'CNPJ'}"
-                                     style="width:100%; #{cadastroBean.cadastrarPessoa.tipoDocumento eq 'CNPJ' ? '' : 'display:none;'}" />
+                                     style="width:100%; #{cadastroBean.cadastrarPessoa.tipoDocumento eq 'CNPJ' ? '' : 'display:none;'}"
+                                     onkeyup="formatarCNPJ(this)"
+                                     onblur="formatarCNPJ(this)"
+                                     onfocus="inicializarCampo(this, 'CNPJ')"
+                                     maxlength="18" />
 
                     </h:panelGroup>
                 </p:panelGrid>
@@ -132,6 +136,169 @@
                 </f:facet>
             </p:dialog>
         </h:form>
+
+        <!-- JavaScript para formatação dos campos -->
+        <script type="text/javascript">
+            //<![CDATA[
+            // Variáveis para controlar o estado dos campos
+            let cpfDigitado = '';
+            let cnpjDigitado = '';
+            let isInitialized = false;
+
+            function inicializarCampo(campo, tipo) {
+                if (campo.value === '' || campo.value === campo.placeholder) {
+                    if (tipo === 'CPF') {
+                        campo.value = '000.000.000-00';
+                        cpfDigitado = '';
+                    } else {
+                        campo.value = '00.000.000/0000-00';
+                        cnpjDigitado = '';
+                    }
+                }
+                isInitialized = true;
+            }
+
+            function formatarCPF(campo) {
+                // Se não foi inicializado pelo evento keydown, processa normalmente
+                if (!isInitialized) {
+                    let valor = campo.value.replace(/\D/g, '');
+
+                    if (valor === '') {
+                        campo.value = '000.000.000-00';
+                        cpfDigitado = '';
+                        return;
+                    }
+
+                    // Remove zeros à esquerda para obter apenas os dígitos significativos
+                    cpfDigitado = valor.replace(/^0+/, '') || '';
+
+                    // Aplica formatação
+                    valor = valor.padStart(11, '0');
+                    valor = valor.substring(0, 11);
+                    valor = valor.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+                    campo.value = valor;
+                }
+                isInitialized = false;
+            }
+
+            function formatarCNPJ(campo) {
+                // Se não foi inicializado pelo evento keydown, processa normalmente
+                if (!isInitialized) {
+                    let valor = campo.value.replace(/\D/g, '');
+
+                    if (valor === '') {
+                        campo.value = '00.000.000/0000-00';
+                        cnpjDigitado = '';
+                        return;
+                    }
+
+                    // Remove zeros à esquerda para obter apenas os dígitos significativos
+                    cnpjDigitado = valor.replace(/^0+/, '') || '';
+
+                    // Aplica formatação
+                    valor = valor.padStart(14, '0');
+                    valor = valor.substring(0, 14);
+                    valor = valor.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+                    campo.value = valor;
+                }
+                isInitialized = false;
+            }
+
+            // Função para aplicar formatação mantendo a sequência
+            function aplicarFormatacao(campo, digitosDigitados, isCPF) {
+                let valor;
+                if (isCPF) {
+                    valor = digitosDigitados.padStart(11, '0');
+                    valor = valor.substring(0, 11);
+                    valor = valor.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+                } else {
+                    valor = digitosDigitados.padStart(14, '0');
+                    valor = valor.substring(0, 14);
+                    valor = valor.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+                }
+                campo.value = valor;
+                isInitialized = true;
+            }
+
+            // Função para permitir digitação mantendo a sequência
+            function adicionarEventosDigitacao() {
+                document.addEventListener('keydown', function(e) {
+                    const campo = e.target;
+
+                    // Verifica se é um campo CPF ou CNPJ
+                    if (campo.id && (campo.id.includes('cpf') || campo.id.includes('cnpj'))) {
+                        const isCPF = campo.id.includes('cpf');
+                        const maxLength = isCPF ? 11 : 14;
+
+                        // Se pressionar backspace ou delete
+                        if (e.key === 'Backspace' || e.key === 'Delete') {
+                            e.preventDefault();
+
+                            if (isCPF) {
+                                if (cpfDigitado.length > 0) {
+                                    cpfDigitado = cpfDigitado.substring(0, cpfDigitado.length - 1);
+                                }
+                                aplicarFormatacao(campo, cpfDigitado, true);
+                            } else {
+                                if (cnpjDigitado.length > 0) {
+                                    cnpjDigitado = cnpjDigitado.substring(0, cnpjDigitado.length - 1);
+                                }
+                                aplicarFormatacao(campo, cnpjDigitado, false);
+                            }
+                        }
+                        // Se pressionar um número
+                        else if (/\d/.test(e.key)) {
+                            e.preventDefault();
+
+                            if (isCPF) {
+                                if (cpfDigitado.length < maxLength) {
+                                    cpfDigitado += e.key;
+                                }
+                                aplicarFormatacao(campo, cpfDigitado, true);
+                            } else {
+                                if (cnpjDigitado.length < maxLength) {
+                                    cnpjDigitado += e.key;
+                                }
+                                aplicarFormatacao(campo, cnpjDigitado, false);
+                            }
+                        }
+                    }
+                });
+
+                // Sincroniza quando o campo recebe foco
+                document.addEventListener('focus', function(e) {
+                    const campo = e.target;
+                    if (campo.id && campo.id.includes('cpf')) {
+                        let valor = campo.value.replace(/\D/g, '');
+                        cpfDigitado = valor.replace(/^0+/, '') || '';
+                    } else if (campo.id && campo.id.includes('cnpj')) {
+                        let valor = campo.value.replace(/\D/g, '');
+                        cnpjDigitado = valor.replace(/^0+/, '') || '';
+                    }
+                }, true);
+
+                // Limpa as variáveis quando o campo perde o foco
+                document.addEventListener('blur', function(e) {
+                    const campo = e.target;
+                    if (campo.id && (campo.id.includes('cpf') || campo.id.includes('cnpj'))) {
+                        // Sincroniza novamente para garantir consistência
+                        if (campo.id.includes('cpf')) {
+                            let valor = campo.value.replace(/\D/g, '');
+                            cpfDigitado = valor.replace(/^0+/, '') || '';
+                        } else {
+                            let valor = campo.value.replace(/\D/g, '');
+                            cnpjDigitado = valor.replace(/^0+/, '') || '';
+                        }
+                    }
+                }, true);
+            }
+
+            // Inicializa os eventos quando a página carrega
+            document.addEventListener('DOMContentLoaded', function() {
+                adicionarEventosDigitacao();
+            });
+            //]]>
+        </script>
     </ui:define>
 
     <ui:define name="footer">
